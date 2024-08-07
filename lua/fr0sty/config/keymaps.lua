@@ -68,3 +68,5 @@ vim.api.nvim_set_keymap(
 )
 
 vim.api.nvim_set_keymap("n", "<C-S-q>", ":qa!<CR>", { noremap = true, silent = true, desc = "Don't save and quit" })
+
+vim.api.nvim_set_keymap("i", "<C-s>", "<ESC>A;<ESC>", { noremap = true, silent = true, desc = "Auto ;" })
