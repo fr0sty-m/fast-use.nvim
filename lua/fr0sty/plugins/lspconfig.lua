@@ -169,8 +169,48 @@ return {
 			--  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
 			--  - settings (table): Override the default settings passed when initializing the server.
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+			local lsp_flags = {
+				debounce_text_changes = 150,
+			}
+
 			local servers = {
-				-- clangd = {},
+				clangd = {
+					keys = {
+						{ "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
+					},
+					root_dir = function(fname)
+						return require("lspconfig.util").root_pattern(
+							"Makefile",
+							"configure.ac",
+							"configure.in",
+							"config.h.in",
+							"meson.build",
+							"meson_options.txt",
+							"build.ninja"
+						)(fname) or require("lspconfig.util").root_pattern(
+							"compile_commands.json",
+							"compile_flags.txt"
+						)(fname) or require("lspconfig.util").find_git_ancestor(fname)
+					end,
+					capabilities = {
+						offsetEncoding = { "utf-16" },
+					},
+					cmd = {
+						"clangd",
+						"--background-index",
+						"--clang-tidy",
+						"--header-insertion=iwyu",
+						"--completion-style=detailed",
+						"--function-arg-placeholders",
+						"--fallback-style=llvm",
+						"--compile-commands-dir=$(pwd)",
+					},
+					init_options = {
+						usePlaceholders = true,
+						completeUnimported = true,
+						clangdFileStatus = true,
+					},
+				},
 				-- gopls = {},
 				-- pyright = {},
 				-- rust_analyzer = {},
@@ -230,4 +270,3 @@ return {
 		end,
 	},
 }
-
