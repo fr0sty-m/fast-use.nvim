@@ -9,10 +9,12 @@ vim.g.have_nerd_font = true
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 --
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
+
+vim.opt.termguicolors = true
 
 -- Make line numbers default
 vim.opt.number = true
@@ -69,3 +71,6 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+-- Backup file
+vim.opt.backupdir = vim.fn.expand("~/AppData/Local/nvim-backup")
